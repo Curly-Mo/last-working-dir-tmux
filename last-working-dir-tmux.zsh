@@ -32,6 +32,10 @@ lwd_global() {
 	[[ -r "$cache_file_global" ]] && cd "$(cat "$cache_file_global")"
 }
 
+lwd() {
+  lwd_session
+}
+
 # Jump to last directory automatically unless:
 # - this isn't the first time the plugin is loaded
 # - it's not in $HOME directory
