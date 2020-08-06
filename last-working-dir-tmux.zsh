@@ -8,7 +8,7 @@ add-zsh-hook chpwd chpwd_last_working_dir_tmux
 chpwd_last_working_dir_tmux() {
 	if [ "$ZSH_SUBSHELL" = 0 ]; then
     local cache_dir="$ZSH_CACHE_DIR/last-working-dir-tmux"
-    if [[ ~ -d $cache_dir ]]; then
+    if [[ ! -d $cache_dir ]]; then
       mkdir -p $cache_dir
     fi
     tmux_session=$(tmux display -p '#S')
