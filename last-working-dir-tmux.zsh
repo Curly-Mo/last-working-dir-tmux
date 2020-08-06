@@ -45,4 +45,4 @@ lwd_global() {
 [[ -n "$ZSH_LAST_WORKING_DIR_TMUX" ]] && return
 [[ "$PWD" != "$HOME" ]] && return
 
-lwd_session 2>/dev/null && ZSH_LAST_WORKING_DIR_TMUX=1 || true
+lwd 2>/dev/null && ZSH_LAST_WORKING_DIR_TMUX=1 || true
