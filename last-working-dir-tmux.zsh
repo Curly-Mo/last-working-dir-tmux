@@ -12,28 +12,31 @@ chpwd_last_working_dir_tmux() {
       mkdir -p $cache_dir
     fi
     tmux_session=$(tmux display -p '#S')
-    local cache_file_session="$ZSH_CACHE_DIR/last-working-dir-tmux/$tmux_session"
+    if [[ ! -z $tmux_session ]]; then
+      local cache_file_session="$ZSH_CACHE_DIR/last-working-dir-tmux/$tmux_session"
+      pwd >| "$cache_file_session"
+    fi
     local cache_file_global="$ZSH_CACHE_DIR/last-working-dir-tmux/global"
-		pwd >| "$cache_file_session"
 		pwd >| "$cache_file_global"
 	fi
 }
 
 # Changes directory to the last working directory in this tmux session
-lwd_session() {
+lwd() {
   tmux_session=$(tmux display -p '#S')
   local cache_file_session="$ZSH_CACHE_DIR/last-working-dir-tmux/$tmux_session"
-	[[ -r "$cache_file_session" ]] && cd "$(cat "$cache_file_session")"
+  local cache_file_global="$ZSH_CACHE_DIR/last-working-dir-tmux/global"
+	if [[ -r "$cache_file_session" ]]; then
+    cd "$(cat "$cache_file_session")"
+  elif [[ -r "$cache_file_global" ]]; then
+    cd "$(cat "$cache_file_global")"
+  fi
 }
 
 # Changes directory to the last working directory
 lwd_global() {
   local cache_file_global="$ZSH_CACHE_DIR/last-working-dir-tmux/global"
 	[[ -r "$cache_file_global" ]] && cd "$(cat "$cache_file_global")"
-}
-
-lwd() {
-  lwd_session
 }
 
 # Jump to last directory automatically unless:
