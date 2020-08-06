@@ -26,7 +26,7 @@ lwd() {
   tmux_session=$(tmux display -p '#S')
   local cache_file_session="$ZSH_CACHE_DIR/last-working-dir-tmux/$tmux_session"
   local cache_file_global="$ZSH_CACHE_DIR/last-working-dir-tmux/global"
-	if [[ -r "$cache_file_session" ]]; then
+  if [[ ! -z $tmux_session && -r "$cache_file_session" ]]; then
     cd "$(cat "$cache_file_session")"
   elif [[ -r "$cache_file_global" ]]; then
     cd "$(cat "$cache_file_global")"
